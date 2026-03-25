@@ -105,6 +105,12 @@ arquivo_upload = st.file_uploader("Selecione a imagem (JPG/PNG)", type=["jpg", "
 if arquivo_upload is not None:
     # Exibir a imagem original
     img_original = Image.open(arquivo_upload)
+    
+    # Verificar se é imagem em escala de cinza
+    if img_original.mode != 'L':
+        st.error("❌ Imagem deve ser em escala de cinza (ultrassom de tireoide). Converte a imagem para grayscale antes de enviar.")
+        st.stop()
+    
     st.image(img_original, caption="Imagem Carregada", use_container_width=True)
     
     if st.button("Analisar Imagem"):
